@@ -1,0 +1,72 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    - saved_metric_id: daily_credits_per_user
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Daily credits consumed per user
+      description: Track the approximate daily credit consumption for each user.
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: XWIDE
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+      group_by:
+        - USER_NAME    
+    # 2
+    - saved_metric_id: daily_credits_per_warehouse
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Daily credits consumed per warehouse 
+      description: Track the approximate daily credit consumption for each warehouse.
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: XWIDE
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+      group_by:
+        - WAREHOUSE_NAME
+    # 3
+    - saved_metric_id: minimum_daily_credit_consumption
+      metric_type:
+        predefined_metric: MIN
+      metric_name: Minimum credits consumed per day
+      description: Track the minimum credits that have been consumed for the account each day.
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: WIDE
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+    # 4
+    - saved_metric_id: daily_credit_consumption
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Total credits consumed per day
+      description: Track the total credits that have been consumed for the account each day.
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
