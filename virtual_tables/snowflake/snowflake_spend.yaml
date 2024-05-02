@@ -1,5 +1,5 @@
 source_name: snowflake_prod
-table_name: SNOWFLAKE_SPEND
+table_name: SNOWFLAKE SPEND
 sql: |
   WITH
   client_hour_execution_cte AS (
