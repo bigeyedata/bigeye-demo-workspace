@@ -1,6 +1,6 @@
 ---
 source_name: snowflake_prod
-table_name: SNOWFLAKE SPEND
+table_name: SNOWFLAKE_SPEND
 sql: >
   WITH
 
