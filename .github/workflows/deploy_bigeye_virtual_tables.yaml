@@ -32,7 +32,7 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          virtual_tables/*.yaml
+          virtual_tables/**.yaml
 
     - name: Deploy virtual tables
       if: steps.verify-changed-files.outputs.any_changed == 'true'
