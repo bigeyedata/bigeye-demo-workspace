@@ -1,0 +1,55 @@
+name: Deploy virtual tables
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
+  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+
+jobs:
+  deploy_virtual_tables:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.9" ]
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4.1.1
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5.0.0
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Verify Changed files
+      uses: tj-actions/changed-files@v44
+      id: verify-changed-files
+      with:
+        files: |
+          virtual_tables/*.yaml
+
+    - name: Deploy virtual tables
+      if: steps.verify-changed-files.outputs.any_changed == 'true'
+      env:
+        CHANGED_FILES: ${{ steps.verify-changed-files.outputs.all_changed_files }}    
+      run: |
+          python -m pip install --upgrade pip
+          python -m pip install bigeye-cli
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+    
+          echo "$BIGEYE_CONFIG" >> config.ini
+          echo "$BIGEYE_CREDENTIALS" >> credentials.ini
+          for file in ${CHANGED_FILES}; do
+            echo "Virtual table upsert for ${file}"
+            vt_info=$(<"${file}")
+            vtn=$(echo $vt_info | yq '.table_name')
+            sn=$(echo $vt_info | yq '.source_name')
+            sql=$(echo $vt_info | yq '.sql')
+            bigeye catalog upsert-virtual-table -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
+          done
+          
