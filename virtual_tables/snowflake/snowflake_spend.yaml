@@ -1,7 +1,7 @@
 ---
 source_name: snowflake_prod
 table_name: SNOWFLAKE_SPEND
-sql: >
+sql: |
   WITH
 
   client_hour_execution_cte AS (
@@ -40,31 +40,17 @@ sql: >
   )
 
   select 
-
   A.start_day,
-
   A.client_application_name, a.warehouse_name, a.database_name, a.user_name, a.role_name, 
-
   a.client_hour_execution_time,
-
   --A.start_time_hour as start_hour, 
-
   (SUM(hour_execution_time) over (partition by A.start_day)) / 60000 as total_daily_execution_time_minutes, 
-
-  -- A.client_application_name, A.warehouse_name, A.database_name, A.user_name, A.role_name      
-
+  -- A.client_application_name, A.warehouse_name, A.database_name, A.user_name, A.role_name 
   (A.client_hour_execution_time/B.hour_execution_time)*C.credits_used AS approximate_credits_used,
-
   ((A.client_hour_execution_time/B.hour_execution_time)*C.credits_used) *3.00 AS approximate_dollar_spend
-
   FROM client_hour_execution_cte A
-
   JOIN hour_execution_cte B
-
   ON A.start_time_hour = B.start_time_hour and B.warehouse_name = A.warehouse_name and a.database_name=b.database_name and a.user_name=b.user_name and a.role_name=b.role_name
-
   JOIN snowflake.account_usage.warehouse_metering_history C
-
   ON C.warehouse_name = A.warehouse_name AND C.start_time = A.start_time_hour
-
   ORDER BY A.start_day desc, total_daily_execution_time_minutes desc
