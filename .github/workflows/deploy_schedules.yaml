@@ -3,6 +3,7 @@ name: Deploy named schedules
 on:
   push:
     branches: [ main ]
+    paths: [ schedules/** ]
 
 env:
   BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}

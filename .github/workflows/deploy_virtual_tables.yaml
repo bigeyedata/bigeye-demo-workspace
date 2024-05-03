@@ -3,6 +3,7 @@ name: Deploy virtual tables
 on:
   push:
     branches: [ main ]
+    paths: [ virtual_tables/** ]
 
 env:
   BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}

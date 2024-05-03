@@ -1,0 +1,42 @@
+name: Plan Bigconfig
+
+on:
+  pull_request:
+    paths: 
+      - bigconfig/*_deployments/**/*.yaml
+      - bigconfig/*_deployments/**/*.yml
+
+env:
+  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
+  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+
+jobs:
+  plan_bigconfig:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.9" ]
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v4.1.1
+      with:
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5.0.0
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Plan bigconfig        
+      run: |
+          python -m pip install --upgrade pip
+          python -m pip install bigeye-cli
+    
+          echo "$BIGEYE_CONFIG" >> config.ini
+          echo "$BIGEYE_CREDENTIALS" >> credentials.ini          
+          bigeye bigconfig plan --bigeye_conf credentials.ini --config_file config.ini --input_path bigconfig --recursive
+
+          
