@@ -51,6 +51,6 @@ jobs:
             schedule_info=$(<"${file}")
             sname=$(echo "${schedule_info}" | yq '.schedule_name')
             schedule_cron=$(echo "${schedule_info}" | yq '.cron')
-            bigeye workspace create-named-schedule --name "${sname}" --cron "${schedule_cron}"
+            bigeye workspace create-named-schedule -b credentials.ini -c config.ini --name "${sname}" --cron "${schedule_cron}"
           done
           

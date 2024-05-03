@@ -33,7 +33,7 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          virtual_tables/*.yaml
+          virtual_tables/**/*.{yaml,yml}
 
     - name: Deploy virtual tables
       if: steps.verify-changed-files.outputs.any_changed == 'true'
@@ -48,10 +48,9 @@ jobs:
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
             echo "Virtual table upsert for ${file}"
-            vt_info=$(<"${file}")
-            vtn=$(echo $vt_info | yq '.table_name')
-            sn=$(echo $vt_info | yq '.source_name')
-            sql=$(echo $vt_info | yq '.sql')
-            bigeye catalog upsert-virtual-table -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
+            vtn=$(cat ${file} | yq '.table_name')
+            sn=$(cat ${file} | yq '.source_name')
+            sql=$(cat ${file} | yq '.sql')
+            bigeye catalog upsert-virtual-table -b credentials.ini -c config.ini -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
           done
           
