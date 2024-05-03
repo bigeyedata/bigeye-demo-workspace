@@ -9,7 +9,7 @@ env:
   BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
 
 jobs:
-  deploy_virtual_tables:
+   deploy_named_schedules:
 
     strategy:
       fail-fast: false
@@ -42,15 +42,13 @@ jobs:
       run: |
           python -m pip install --upgrade pip
           python -m pip install bigeye-cli
-          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
     
-          echo "$BIGEYE_CONFIG" >> config.ini
-          echo "$BIGEYE_CREDENTIALS" >> credentials.ini
+          mkdir .bigeye && echo "$BIGEYE_CONFIG" >> .bigeye/config.ini && echo "$BIGEYE_CREDENTIALS" >> .bigeye/credentials.ini
           for file in ${CHANGED_FILES}; do
             echo "Creating schedule from ${file}"
             schedule_info=$(<"${file}")
             sname=$(echo "${schedule_info}" | yq '.schedule_name')
             schedule_cron=$(echo "${schedule_info}" | yq '.cron')
-            bigeye workspace create-named-schedule -b credentials.ini -c config.ini --name "${sname}" --cron "${schedule_cron}"
+            bigeye workspace create-named-schedule --name "${sname}" --cron "${schedule_cron}"
           done
           
