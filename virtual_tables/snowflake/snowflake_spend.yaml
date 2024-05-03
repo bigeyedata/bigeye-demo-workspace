@@ -1,5 +1,5 @@
 ---
-source_name: snowflake_prod
+source_name: snowflake_warehouse
 table_name: SNOWFLAKE_SPEND
 sql: |
   WITH
