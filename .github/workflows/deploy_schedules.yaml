@@ -43,12 +43,13 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install bigeye-cli
     
-          mkdir .bigeye && echo "$BIGEYE_CONFIG" >> .bigeye/config.ini && echo "$BIGEYE_CREDENTIALS" >> .bigeye/credentials.ini
+          echo "$BIGEYE_CONFIG" >> config.ini
+          echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
             echo "Creating schedule from ${file}"
             schedule_info=$(<"${file}")
             sname=$(echo "${schedule_info}" | yq '.schedule_name')
             schedule_cron=$(echo "${schedule_info}" | yq '.cron')
-            bigeye workspace create-named-schedule --name "${sname}" --cron "${schedule_cron}"
+            bigeye workspace create-named-schedule --bigeye_conf credentials.ini --config_file config.ini --name "${sname}" --cron "${schedule_cron}"
           done
           

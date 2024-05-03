@@ -42,13 +42,15 @@ jobs:
       run: |
           python -m pip install --upgrade pip
           python -m pip install bigeye-cli
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
     
-          mkdir .bigeye && echo "$BIGEYE_CONFIG" >> .bigeye/config.ini && echo "$BIGEYE_CREDENTIALS" >> .bigeye/credentials.ini
+          echo "$BIGEYE_CONFIG" >> config.ini
+          echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
             echo "Virtual table upsert for ${file}"
             vtn=$(cat ${file} | yq '.table_name')
             sn=$(cat ${file} | yq '.source_name')
             sql=$(cat ${file} | yq '.sql')
-            bigeye catalog upsert-virtual-table -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
+            bigeye catalog upsert-virtual-table --bigeye_conf credentials.ini --config_file config.ini -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
           done
           
