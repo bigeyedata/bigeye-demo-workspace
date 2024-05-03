@@ -51,6 +51,6 @@ jobs:
             vtn=$(cat ${file} | yq '.table_name')
             sn=$(cat ${file} | yq '.source_name')
             sql=$(cat ${file} | yq '.sql')
-            bigeye catalog upsert-virtual-table -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
+            bigeye catalog upsert-virtual-table -b credentials.ini -c config.ini -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
           done
           
