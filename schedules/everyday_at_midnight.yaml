@@ -1,0 +1,3 @@
+---
+schedule_name: Everyday at 00:00 CST
+cron: 0 5 * * *

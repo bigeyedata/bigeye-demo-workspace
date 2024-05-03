@@ -1,4 +1,4 @@
-name: Deploy virtual tables
+name: Deploy named schedules
 
 on:
   push:
@@ -10,12 +10,13 @@ env:
 
 jobs:
   deploy_virtual_tables:
-    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
-        python-version: [ "3.9" ]        
+        python-version: [ "3.9" ]
+        os: [ ubuntu-latest ]
+    runs-on: ${{ matrix.os }}
 
     steps:
     - uses: actions/checkout@v4.1.1
@@ -32,9 +33,9 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          virtual_tables/**/*.{yaml,yml}
+          schedules/*.{yaml,yml}
 
-    - name: Deploy virtual tables
+    - name: Deploy named schedules
       if: steps.verify-changed-files.outputs.any_changed == 'true'
       env:
         CHANGED_FILES: ${{ steps.verify-changed-files.outputs.all_changed_files }}    
@@ -42,15 +43,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install bigeye-cli
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
-          yq --version
     
           echo "$BIGEYE_CONFIG" >> config.ini
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
-            echo "Virtual table upsert for ${file}"
-            vtn=$(cat ${file} | yq '.table_name')
-            sn=$(cat ${file} | yq '.source_name')
-            sql=$(cat ${file} | yq '.sql')
-            bigeye catalog upsert-virtual-table -b credentials.ini -c config.ini -vtn "${vtn}" -sn "${sn}" --sql "${sql}"
+            echo "Creating schedule from ${file}"
+            schedule_info=$(<"${file}")
+            sname=$(echo "${schedule_info}" | yq '.schedule_name')
+            schedule_cron=$(echo "${schedule_info}" | yq '.cron')
+            bigeye workspace create-named-schedule -b credentials.ini -c config.ini --name "${sname}" --cron "${schedule_cron}"
           done
           
