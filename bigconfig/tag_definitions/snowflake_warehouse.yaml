@@ -1,0 +1,51 @@
+type: BIGCONFIG_FILE
+
+tag_definitions:
+  # Keys and identifiers
+  - tag_id: PRIMARY_KEYS
+    column_selectors:
+      - name: "snowflake_warehouse.*repl.orders.order_id"
+      - name: "snowflake_warehouse.*repl.shipment.shipment_id"
+      - name: "snowflake_warehouse.*repl.payment_method.payment_method_id"
+      - name: "snowflake_warehouse.*repl.customer.customer_id"
+  - tag_id: IDENTIFIERS
+    column_selectors:
+      - name: "snowflake_warehouse.conformed.*.*._id"
+
+  # Product related
+  - tag_id: PRODUCT_TYPES
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.product_type"
+
+  # Shipping related
+  - tag_id: SHIPPING_STATE_COLUMNS
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.shipping_state"
+  - tag_id: SHIPMENT_TRACKING_NUMS
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.tracking_number"
+
+   # Location datae
+  - tag_id: STATE_COLUMNS
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.*_state"
+  - tag_id: CITY_COLUMNS
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.*_city"
+  - tag_id: ZIP_COLUMNS
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.*_zip"
+
+  # Customer PII
+  - tag_id: CUSTOMER_EMAILS
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.email"
+  - tag_id: CUSTOMER_NAMES
+    column_selectors:
+      - name: "snowflake_warehouse.*.*.first_name"
+      - name: "snowflake_warehouse.*.*.last_name"
+
+  # Analytics
+  - tag_id: ORDER_ANALYTICS
+    column_selectors:
+      - name: "snowflake_warehouse.*.ORDER_ANALYTICS.daily_sales"

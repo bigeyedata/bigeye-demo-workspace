@@ -1,0 +1,17 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    # User defined
+    - saved_metric_id: ALLOWED_PRODUCT_TYPES
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: PERCENT_VALUE_IN_LIST
+      metric_name: Valid product type (%)
+      parameters:
+        - key: list
+          string_value: “CASSETTE,VINYL_LP”
+      threshold:
+        type: AUTO
+        sensitivity: NARROW

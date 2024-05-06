@@ -1,0 +1,24 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+  # 1
+  - saved_metric_id: ROW_COUNT_AUTO
+    metric_type:
+      type: PREDEFINED
+      predefined_metric: COUNT_ROWS
+    metric_name: Row count anomalies
+    description: Anomaly detection on number of rows per day.
+    threshold:
+      type: AUTO
+      sensitivity: MEDIUM
+  # 2
+  - saved_metric_id: METADATA_VOLUME_AUTO
+    metric_type:
+      type: PREDEFINED
+      predefined_metric: VOLUME
+    metric_name: Volume monitoring
+    description: Monitoring on dataset volume per day using metadata tables of a database.
+    threshold:
+      type: AUTO
+      sensitivity: MEDIUM

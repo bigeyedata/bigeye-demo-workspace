@@ -12,7 +12,10 @@ saved_metric_definitions:
         - START_DAY
       threshold:
         type: AUTO
-        sensitivity: XWIDE
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
       lookback:
         lookback_window:
           interval_type: DAYS
@@ -30,7 +33,10 @@ saved_metric_definitions:
         - START_DAY
       threshold:
         type: AUTO
-        sensitivity: XWIDE
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
       lookback:
         lookback_window:
           interval_type: DAYS
@@ -39,32 +45,118 @@ saved_metric_definitions:
       group_by:
         - WAREHOUSE_NAME
     # 3
-    - saved_metric_id: minimum_daily_credit_consumption
-      metric_type:
-        predefined_metric: MIN
-      metric_name: Minimum credits consumed per day
-      description: Track the minimum credits that have been consumed for the account each day.
-      rct_overrides:
-        - START_DAY
-      threshold:
-        type: AUTO
-        sensitivity: WIDE
-      lookback:
-        lookback_window:
-          interval_type: DAYS
-          interval_value: 2
-        lookback_type: METRIC_TIME
-    # 4
     - saved_metric_id: daily_credit_consumption
       metric_type:
         predefined_metric: SUM
-      metric_name: Total credits consumed per day
+      metric_name: Daily credit consumption
       description: Track the total credits that have been consumed for the account each day.
       rct_overrides:
         - START_DAY
       threshold:
         type: AUTO
         sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+    # 4
+    - saved_metric_id: daily_dollar_spend_per_user
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Daily dollar spend per user
+      description: Track the approximate daily spend in dollars for each user. Estimated using enterpise pricing at https://www.snowflake.com/en/data-cloud/pricing-options/
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+      group_by:
+        - USER_NAME
+    # 5
+    - saved_metric_id: daily_dollar_spend
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Daily dollar spend
+      description: Track the approximate daily spend in dollars for the account. Estimated using enterpise pricing at https://www.snowflake.com/en/data-cloud/pricing-options/
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+    # 6
+    - saved_metric_id: total_execution_time_per_client
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Total execution time by client
+      description: Track the total query execution time in minutes by client application per day
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+      group_by:
+        - CLIENT_APPLICATION_NAME
+    # 7
+    - saved_metric_id: daily_credit_consumption_average
+      metric_type:
+        predefined_metric: AVERAGE
+      metric_name: Daily average credit consumption
+      description: The average credits consumed per day. 
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
+      lookback:
+        lookback_window:
+          interval_type: DAYS
+          interval_value: 2
+        lookback_type: METRIC_TIME
+    # 8
+    - saved_metric_id: daily_credit_consumption_distribution
+      metric_type:
+        predefined_metric: SKEW
+      metric_name: Daily credit consumption around the average
+      description: The lower the number, the more credits have been consumed compared to the daily average. 
+      rct_overrides:
+        - START_DAY
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
       lookback:
         lookback_window:
           interval_type: DAYS

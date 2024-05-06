@@ -1,0 +1,10 @@
+type: BIGCONFIG_FILE
+
+tag_deployments:
+  - collection:
+      name: Data Platform - Data Pipeline Flow
+      description: Operational checks for freshness and row counts.
+    deployments:
+      - tag_id: ALL_S3_TABLES
+        metrics:
+          - saved_metric_id: ROW_COUNT_AUTO
