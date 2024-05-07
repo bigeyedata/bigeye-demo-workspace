@@ -1,7 +1,7 @@
 type: BIGCONFIG_FILE
 
-row_creation_times:
-  column_selectors:
-    - name: "snowflake_warehouse.*.sales_dashboard.update_timestamp"
-    - name: "snowflake_warehouse.*.price_reporting.hour"
-    - name: "snowflake_warehouse.*.order_analytics.dt"
+# row_creation_times:
+#   column_selectors:
+#     - name: "snowflake_warehouse.*.sales_dashboard.update_timestamp"
+#     - name: "snowflake_warehouse.*.price_reporting.hour"
+#     - name: "snowflake_warehouse.*.order_analytics.dt"
