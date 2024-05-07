@@ -1,0 +1,17 @@
+type: BIGCONFIG_FILE
+tag_definitions:
+  # Timestamps
+  - tag_id: CREATE_TIMESTAMPS
+    column_selectors:
+      - name: "*.*.*.created_timestamp"
+  - tag_id: UPDATE_TIMESTAMPS
+    column_selectors:
+      - name: "*.*.orders.order_timestamp"
+      - name: "*.*.shipment.status_timestamp"
+      - name: "*.*.product_price.price_set_timestamp"
+      - name: "*.*.*.update_timestamp"
+  
+  # Numerics
+  - tag_id: UNIT_PRICES
+    column_selectors:
+      - name: "*.*.*.price_per_unit"

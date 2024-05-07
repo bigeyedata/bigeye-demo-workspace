@@ -1,0 +1,6 @@
+type: BIGCONFIG_FILE
+tag_definitions:
+  # All columns that record when rows were written or updated.
+  - tag_id: ALL_POSTGRES_TABLES
+    column_selectors:
+      - name: "pg_webapp.*.*.*"

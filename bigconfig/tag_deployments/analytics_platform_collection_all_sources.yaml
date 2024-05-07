@@ -1,0 +1,24 @@
+type: BIGCONFIG_FILE
+
+tag_deployments:
+  - collection:
+      name: Analytics - Customer, order, shipment data quality
+      description: Data quality checks for customer data
+    deployments:
+      - tag_id: UNIT_PRICES
+        metrics:
+          - metric_type:
+              predefined_metric: MIN
+            threshold:
+              type: AUTO
+              sensitivity: MEDIUM
+          - metric_type:
+              predefined_metric: MAX
+            threshold:
+              type: AUTO
+              sensitivity: MEDIUM
+          - metric_type:
+              predefined_metric: AVERAGE
+            threshold:
+              type: AUTO
+              sensitivity: MEDIUM

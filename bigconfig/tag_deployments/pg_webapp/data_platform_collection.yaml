@@ -1,0 +1,11 @@
+type: BIGCONFIG_FILE
+
+tag_deployments:
+  - collection:
+      name: Data Platform - Data Pipeline Flow
+      description: Operational checks for freshness and row counts.
+    deployments:
+      # Row counts
+      - tag_id: ALL_POSTGRES_TABLES
+        metrics:
+          - saved_metric_id: ROW_COUNT_AUTO

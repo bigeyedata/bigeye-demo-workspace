@@ -1,0 +1,69 @@
+type: BIGCONFIG_FILE
+
+tag_deployments:
+  - collection:
+      name: Analytics - Customer, order, shipment data quality
+      description: Data quality checks for customer data
+    deployments:
+      # Keys and identifiers
+      - tag_id: PRIMARY_KEYS
+        metrics:
+          - saved_metric_id: COMPLETENESS_REQUIRED
+          - saved_metric_id: UNIQUENESS_REQUIRED
+      - tag_id: IDENTIFIERS
+        metrics:
+          - saved_metric_id: COMPLETENESS_REQUIRED
+          - saved_metric_id: DUPLICATES_ANOMALIES
+      # Products and pricing
+      - tag_id: PRODUCT_TYPES
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+          - saved_metric_id: ALLOWED_PRODUCT_TYPES
+      # Shipments
+      - tag_id: SHIPPING_STATE_COLUMNS
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+          - metric_type:
+              type: TEMPLATE
+              template_id: 18
+              aggregation_type: PERCENT
+              template_name: Valid shipping state
+            parameters:
+              - key: column_1
+                column_name: shipping_state
+      - tag_id: SHIPMENT_TRACKING_NUMS
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+          - metric_type:
+              type: TEMPLATE
+              template_id: 105
+              aggregation_type: PERCENT
+              template_name: Valid tracking number
+            parameters:
+              - key: tracking_number
+                column_name: tracking_number
+      # Locations
+      - tag_id: STATE_COLUMNS
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+      - tag_id: CITY_COLUMNS
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+      - tag_id: ZIP_COLUMNS
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+      # Customer fields
+      - tag_id: CUSTOMER_EMAILS
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+          - metric_type:
+              predefined_metric: PERCENT_EMAIL
+            threshold:
+              type: AUTO
+              sensitivity: NARROW
+      - tag_id: CUSTOMER_NAMES
+        metrics:
+          - saved_metric_id: CARDINALITY_ANOMALIES
+      - tag_id: ORDER_ANALYTICS
+        metrics:
+          - saved_metric_id: AVERAGE_DAILY_SEASONALITY

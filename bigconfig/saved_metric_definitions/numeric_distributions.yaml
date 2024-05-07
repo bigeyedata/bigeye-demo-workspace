@@ -1,0 +1,18 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    - saved_metric_id: AVERAGE_DAILY_SEASONALITY
+      metric_type:
+        predefined_metric: AVERAGE
+      metric_name: Average Hourly Sales
+      schedule_frequency: &every3hours
+        interval_type: HOURS
+        interval_value: 3
+      threshold:
+        type: AUTO
+        sensitivity: NARROW
+      lookback: &dtw_hourly
+        lookback_type: METRIC_TIME
+        bucket_size: HOUR

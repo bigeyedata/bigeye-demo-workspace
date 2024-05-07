@@ -1,0 +1,34 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    - saved_metric_id: UNIQUENESS_REQUIRED
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: COUNT_DUPLICATES
+      metric_name: Duplicates (#)
+      description: Requires that a field not contain duplicates.  Will alert if the duplicate count exceeds 0.
+      threshold:
+        type: CONSTANT
+        upper_bound: 0
+    # 2
+    - saved_metric_id: DUPLICATES_ANOMALIES
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: COUNT_DUPLICATES
+      metric_name: Duplicates (#)
+      description: Alert on any sudden changes in the number of duped values.
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+    # 3
+    - saved_metric_id: CARDINALITY_ANOMALIES
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: COUNT_DISTINCT
+      metric_name: Distinct values (#)
+      description: Alert on any sudden changes in the number of unique values.
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM

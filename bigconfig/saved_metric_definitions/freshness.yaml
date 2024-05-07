@@ -1,0 +1,38 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    - saved_metric_id: FRESHNESS_AUTO
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: HOURS_SINCE_MAX_TIMESTAMP
+      metric_name: Freshness anomalies
+      description: Hours elapsed from UTC time to the latest value in the column.
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+      conditions: # Workaround for limitation on applying same metric multiple times
+        - 1=1
+    # 2
+    - saved_metric_id: FRESHNESS_48HR
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: HOURS_SINCE_MAX_TIMESTAMP
+      metric_name: Freshness within 48hrs
+      description: Hours elapsed from UTC time to the latest value in the column.
+      threshold:
+        type: CONSTANT
+        upper_bound: 48
+      conditions: # Workaround for limitation on applying same metric multiple times
+        - 2=2
+    # 3
+    - saved_metric_id: METADATA_FRESHNESS_AUTO
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: FRESHNESS
+      metric_name: Freshness monitoring
+      description: Hours elapsed from UTC time to the latest value in the column; i.e. calculated by (metric run time in UTC - latest value in column)
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM

@@ -1,0 +1,10 @@
+type: BIGCONFIG_FILE
+
+# row_creation_times:
+#   column_selectors:
+#     - name: "*.*.customer.update_timestamp"
+#     - name: "*.*.orders.order_timestamp"
+#     - name: "*.*.payment_method.update_timestamp"
+#     - name: "*.*.product_price.price_set_timestamp"
+#     - name: "*.*.product_stock.update_timestamp"
+#     - name: "*.*.shipment.status_timestamp"

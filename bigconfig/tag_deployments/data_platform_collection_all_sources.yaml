@@ -1,0 +1,16 @@
+type: BIGCONFIG_FILE
+
+
+tag_deployments:
+  - collection:
+      name: Data Platform - Data Pipeline Flow
+      description: Operational checks for freshness and row counts.
+    deployments:
+      # Freshness
+      - tag_id: CREATE_TIMESTAMPS
+        metrics:
+          - saved_metric_id: FRESHNESS_AUTO
+      - tag_id: UPDATE_TIMESTAMPS
+        metrics:
+          - saved_metric_id: FRESHNESS_AUTO
+          - saved_metric_id: FRESHNESS_48HR

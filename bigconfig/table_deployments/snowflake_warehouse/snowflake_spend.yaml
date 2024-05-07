@@ -1,0 +1,25 @@
+type: BIGCONFIG_FILE
+
+table_deployments:
+  - collection:
+      name: Snowflake Spend
+      notification_channels:
+        - email: operations@bigeye.com
+        - slack: '#operations'
+    deployments:
+      - fq_table_name: snowflake_warehouse.Bigeye Virtual Schema.SNOWFLAKE_SPEND
+        columns:
+          - column_name: APPROXIMATE_CREDITS_USED
+            metrics:
+              - saved_metric_id: daily_credits_per_user
+              - saved_metric_id: daily_credits_per_warehouse
+              - saved_metric_id: daily_credit_consumption
+              - saved_metric_id: daily_credit_consumption_average
+              - saved_metric_id: daily_credit_consumption_distribution
+          - column_name: TOTAL_DAILY_EXECUTION_TIME_MINUTES
+            metrics:
+              - saved_metric_id: total_execution_time_per_client
+          - column_name: APPROXIMATE_DOLLAR_SPEND
+            metrics:
+              - saved_metric_id: daily_dollar_spend
+              - saved_metric_id: daily_dollar_spend_per_user

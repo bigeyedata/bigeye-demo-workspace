@@ -1,0 +1,14 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    - saved_metric_id: COMPLETENESS_REQUIRED
+      metric_type:
+        type: PREDEFINED
+        predefined_metric: PERCENT_NOT_NULL
+      metric_name: Completeness (%)
+      description: Requires that field contain a value.  Will alert if the percent null exceeds 0%.
+      threshold:
+        type: CONSTANT
+        lower_bound: 1
