@@ -1,16 +1,16 @@
-name: Deploy templates
+name: Delete named schedules
 
 on:
   push:
     branches: [ main ]
-    paths: [ templates/** ]
+    paths: [ schedules/** ]
 
 env:
   BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
   BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
 
 jobs:
-   deploy_templates:
+   deploy_named_schedules:
 
     strategy:
       fail-fast: false
@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4.1.1
       with:
-        fetch-depth: 0
+        fetch-depth: 2
     
     - name: Set up Python
       uses: actions/setup-python@v5.0.0
@@ -34,20 +34,22 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          templates/**/*.{yaml,yml}
+          schedules/*.{yaml,yml}
 
-    - name: Deploy templates
-      if: steps.verify-changed-files.outputs.any_changed == 'true'
+    - name: Delete named schedules
+      if: steps.verify-changed-files.outputs.any_deleted == 'true'
       env:
-        CHANGED_FILES: ${{ steps.verify-changed-files.outputs.all_changed_files }}    
+        DELETED_FILES: ${{ steps.verify-changed-files.outputs.deleted_files }}    
       run: |
           python -m pip install --upgrade pip
           python -m pip install bigeye-cli
     
           echo "$BIGEYE_CONFIG" >> config.ini
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
-          for file in ${CHANGED_FILES}; do
-            echo "Creating template from ${file}"            
-            bigeye workspace upsert-template --bigeye_conf credentials.ini --config_file config.ini --template_file "${file}"
+          for file in ${DELETED_FILES}; do
+            echo "Deleting schedule from ${file}"
+            schedule_info=$(<"${file}")
+            sname=$(echo "${schedule_info}" | yq '.schedule_name')
+            bigeye workspace delete-named-schedule --bigeye_conf credentials.ini --config_file config.ini --name "${sname}"
           done
           
