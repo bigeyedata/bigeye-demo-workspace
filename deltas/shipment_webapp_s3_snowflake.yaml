@@ -1,0 +1,67 @@
+type: DELTA_CONFIGURATION_FILE
+deltas:
+- delta_name: pg_webapp.tooy_demo_db.prod.shipment <> ['s3_lake.AwsDataCatalog.tooy_demodb_iceberg.shipment',
+    'snowflake_warehouse.TOOY_DEMO.PROD_REPL.SHIPMENT']
+  fq_source_table_name: pg_webapp.tooy_demo_db.prod.shipment
+  cron_schedule:
+    name: Daily at 00:00 CDT
+  notification_channels:
+    - email: operations@somecompany.com
+    - slack: '#operations'
+  target_table_comparisons:
+  - fq_target_table_name: s3_lake.AwsDataCatalog.tooy_demo_db_iceberg.shipment
+    delta_column_mapping:
+    - source_column_name: shipment_id
+      target_column_name: shipment_id
+      metrics:      
+      - type: PREDEFINED
+        predefined_metric: COUNT_DUPLICATES
+    - source_column_name: order_id
+      target_column_name: order_id
+    - source_column_name: tracking_number
+      target_column_name: tracking_number
+    - source_column_name: status
+      target_column_name: status
+      metrics:
+      - type: PREDEFINED
+        predefined_metric: COUNT_DISTINCT
+    - source_column_name: status_timestamp
+      target_column_name: status_timestamp
+      metrics:
+      - type: PREDEFINED
+        predefined_metric: PERCENT_NOT_IN_FUTURE
+    all_column_metrics:
+      - type: PREDEFINED
+        predefined_metric: COUNT_NULL
+    group_bys: []
+    source_filters: []
+    target_filters: []
+    tolerance: 0.999
+  - fq_target_table_name: snowflake_warehouse.TOOY_DEMO.PROD_REPL.SHIPMENT
+    delta_column_mapping:
+    - source_column_name: shipment_id
+      target_column_name: shipment_id
+      metrics:      
+      - type: PREDEFINED
+        predefined_metric: COUNT_DUPLICATES
+    - source_column_name: order_id
+      target_column_name: order_id
+    - source_column_name: tracking_number
+      target_column_name: tracking_number
+    - source_column_name: status
+      target_column_name: status
+      metrics:
+      - type: PREDEFINED
+        predefined_metric: COUNT_DISTINCT
+    - source_column_name: status_timestamp
+      target_column_name: status_timestamp
+      metrics:
+      - type: PREDEFINED
+        predefined_metric: PERCENT_NOT_IN_FUTURE
+    all_column_metrics:
+      - type: PREDEFINED
+        predefined_metric: COUNT_NULL
+    group_bys: []
+    source_filters: []
+    target_filters: []
+    tolerance: 0.999
