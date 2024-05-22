@@ -8,12 +8,14 @@ jobs:
     steps:
     - uses: actions/checkout@v4.1.1
       with:
-        fetch-depth: 2
-        
+        fetch-depth: 0
+
     - name: Verify Changed files
       uses: tj-actions/changed-files@v44
       id: verify-changed-files
       with:
+        write_output_files: true
+        json: true
         files: |
           schedules/*.{yaml,yml}
 
@@ -24,7 +26,10 @@ jobs:
         URL: ${{ github.event.pull_request.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       run: |
-          for file in ${DELETED_FILES}; do            
+          for file in ${DELETED_FILES}; do
+            ls -lt .github/outputs/
+            cat .github/outputs/deleted_files.json
+            
             schedule_info=$(<"${file}")
             sname=$(echo "${schedule_info}" | yq '.schedule_name')
             curl \
