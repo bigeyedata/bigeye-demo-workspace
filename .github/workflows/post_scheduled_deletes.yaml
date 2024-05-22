@@ -6,6 +6,10 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v4.1.1
+      with:
+        fetch-depth: 2
+        
     - name: Verify Changed files
       uses: tj-actions/changed-files@v44
       id: verify-changed-files
