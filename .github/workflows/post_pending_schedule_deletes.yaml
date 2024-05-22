@@ -1,5 +1,6 @@
 on:
   pull_request:
+    types: [opened]
 
 jobs:
   post_pending_schedule_deletes:
