@@ -1,0 +1,38 @@
+on:
+  pull_request:
+
+jobs:
+  post_pending_schedule_deletes:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4.1.1
+      with:
+        fetch-depth: 0
+
+    - name: Verify Changed files
+      uses: tj-actions/changed-files@v44
+      id: verify-changed-files
+      with:
+        files: |
+          schedules/*.{yaml,yml}
+
+    - name: Post pending deletes       
+      if: steps.verify-changed-files.outputs.any_deleted == 'true'
+      env:
+        DELETED_FILES: ${{ steps.verify-changed-files.outputs.deleted_files }}
+        URL: ${{ github.event.pull_request.comments_url }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
+      run: |
+          for file in ${DELETED_FILES}; do
+            deleted_commit=$(git rev-list --max-count=1 --all -- "${file}")
+            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.schedule_name')
+            snames+="* ${sname}\n    "
+            curl \
+            -X POST \
+            $URL \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            --data "{ \"body\": \"The following schedules will be deleted from Bigeye with this PR:\n    ${snames}\" }"
+          done
+
+        

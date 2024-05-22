@@ -22,7 +22,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4.1.1
       with:
-        fetch-depth: 2
+        fetch-depth: 0
     
     - name: Set up Python
       uses: actions/setup-python@v5.0.0
@@ -47,9 +47,9 @@ jobs:
           echo "$BIGEYE_CONFIG" >> config.ini
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${DELETED_FILES}; do
-            echo "Deleting schedule from ${file}"
-            schedule_info=$(<"${file}")
-            sname=$(echo "${schedule_info}" | yq '.schedule_name')
+            deleted_commit=$(git rev-list --max-count=1 --all -- "${file}")
+            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.schedule_name')
+            echo "Deleting schedule ${sname}"
             bigeye workspace delete-named-schedule --bigeye_conf credentials.ini --config_file config.ini --name "${sname}"
           done
           
