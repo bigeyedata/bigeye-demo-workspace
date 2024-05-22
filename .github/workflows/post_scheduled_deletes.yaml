@@ -21,9 +21,9 @@ jobs:
           schedules/*.{yaml,yml}
 
     - name: Post pending deletes       
-      if: steps.verify-changed-files.outputs.any_deleted == 'true'
+      if: steps.verify-changed-files.outputs.any_modified == 'true'
       env:
-        DELETED_FILES: ${{ steps.verify-changed-files.outputs.deleted_files }}
+        DELETED_FILES: ${{ steps.verify-changed-files.outputs.modified_files }}
         URL: ${{ github.event.pull_request.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       run: |
