@@ -16,7 +16,6 @@ jobs:
       with:
         write_output_files: true
         json: true
-        since_last_remote_commit: true
         files: |
           schedules/*.{yaml,yml}
 
