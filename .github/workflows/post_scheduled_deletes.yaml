@@ -14,24 +14,19 @@ jobs:
       uses: tj-actions/changed-files@v44
       id: verify-changed-files
       with:
-        write_output_files: true
-        json: true
         files: |
           schedules/*.{yaml,yml}
 
     - name: Post pending deletes       
-      if: steps.verify-changed-files.outputs.any_modified == 'true'
+      if: steps.verify-changed-files.outputs.any_deleted == 'true'
       env:
-        DELETED_FILES: ${{ steps.verify-changed-files.outputs.modified_files }}
+        DELETED_FILES: ${{ steps.verify-changed-files.outputs.deleted_files }}
         URL: ${{ github.event.pull_request.comments_url }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
       run: |
           for file in ${DELETED_FILES}; do
-            
-            cat .github/outputs/deleted_files.json
-
-            schedule_info=$(<"${file}")
-            sname=$(echo "${schedule_info}" | yq '.schedule_name')
+            deleted_commit=$(git rev-list --max-count=1 --all -- "${file}")
+            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.schedule_name')
             curl \
             -X POST \
             $URL \
