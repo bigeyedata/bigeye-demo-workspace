@@ -1,16 +1,16 @@
-name: Delete named schedules
+name: Delete virtual tables
 
 on:
   push:
     branches: [ main ]
-    paths: [ schedules/** ]
+    paths: [ virtual_tables/** ]
 
 env:
   BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
   BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
 
 jobs:
-   delete_named_schedules:
+   delete_virtual_tables:
 
     strategy:
       fail-fast: false
@@ -34,9 +34,9 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          schedules/*.{yaml,yml}
+          virtual_tables/**/*.{yaml,yml}
 
-    - name: Delete named schedules
+    - name: Delete virtual tables
       if: steps.verify-changed-files.outputs.any_deleted == 'true'
       env:
         DELETED_FILES: ${{ steps.verify-changed-files.outputs.deleted_files }}    
@@ -48,8 +48,9 @@ jobs:
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${DELETED_FILES}; do
             deleted_commit=$(git rev-list --max-count=1 --all -- "${file}")
-            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.schedule_name')
-            echo "Deleting schedule ${sname}"
-            bigeye workspace delete-named-schedule --bigeye_conf credentials.ini --config_file config.ini --name "${sname}"
+            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.source_name')
+            tname=$(git show "${deleted_commit}"^:"${file}" | yq '.table_name')
+            echo "Deleting virtual table ${tname} in source ${sname}"
+            bigeye catalog delete-virtual-table --bigeye_conf credentials.ini --config_file config.ini --source_name "${sname}" --table_name "${tname}"
           done
           
