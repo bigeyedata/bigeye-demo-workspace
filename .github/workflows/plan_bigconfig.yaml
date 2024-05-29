@@ -1,12 +1,19 @@
 name: Plan Bigconfig
 
 on:
-  pull_request:
-    paths: 
-      - bigconfig/*_deployments/**/*.yaml
-      - bigconfig/*_deployments/**/*.yml
+  # pull_request:
+  #   paths: 
+  #     - bigconfig/*_deployments/**/*.yaml
+  #     - bigconfig/*_deployments/**/*.yml
+  
+  discussion:
+    types:
+      - created
 
 env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  PR_NUMBER: ${{ github.event.number }}
+  CURRENT_REPO: ${{ github.repository }}
   BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
   BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
 
@@ -37,6 +44,6 @@ jobs:
     
           echo "$BIGEYE_CONFIG" >> config.ini
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini          
-          bigeye bigconfig plan --bigeye_conf credentials.ini --config_file config.ini --input_path bigconfig --recursive
+          bigeye bigconfig plan --bigeye_conf credentials.ini --config_file config.ini --input_path bigconfig --recursive --cicd_report
 
           

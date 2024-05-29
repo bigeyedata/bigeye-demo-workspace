@@ -23,3 +23,5 @@ table_deployments:
             metrics:
               - saved_metric_id: daily_dollar_spend
               - saved_metric_id: daily_dollar_spend_per_user
+              - metric_type:
+                  predefined_metric: MAX

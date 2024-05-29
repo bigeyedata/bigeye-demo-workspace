@@ -1,6 +1,0 @@
-type: DELTA_CICD_CONFIG_FILE
-cicd_conf:
-  vendor: GITHUB
-  delta_name: CICD Delta - pg_webapp.tooy_demo_db.prod.shipment vs. s3_lake.AwsDataCatalog.tooy_demo_db_iceberg.shipment
-  fq_source_table_name: pg_webapp.tooy_demo_db.prod.shipment
-  fq_target_table_name: s3_lake.AwsDataCatalog.tooy_demo_db_iceberg.shipment

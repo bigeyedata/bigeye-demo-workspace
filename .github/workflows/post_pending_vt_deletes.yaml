@@ -1,10 +1,11 @@
-name: Post pending deletes for named schedules
+name: Post pending deletes for virtual tables
+
 on:
   pull_request:
     types: [opened]
 
 jobs:
-  post_pending_schedule_deletes:
+  post_pending_virtual_table_deletes:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4.1.1
@@ -16,7 +17,7 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          schedules/*.{yaml,yml}
+          virtual_tables/**/*.{yaml,yml}
 
     - name: Post pending deletes       
       if: steps.verify-changed-files.outputs.any_deleted == 'true'
@@ -27,14 +28,15 @@ jobs:
       run: |
           for file in ${DELETED_FILES}; do
             deleted_commit=$(git rev-list --max-count=1 --all -- "${file}")
-            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.schedule_name')
-            snames+="* ${sname}\n    "
+            vtname=$(git show "${deleted_commit}"^:"${file}" | yq '.table_name')
+            sname=$(git show "${deleted_commit}"^:"${file}" | yq '.source_name')
+            vtnames+="* ${sname}.${vtname}\n    "
             curl \
             -X POST \
             $URL \
             -H "Content-Type: application/json" \
             -H "Authorization: token $GITHUB_TOKEN" \
-            --data "{ \"body\": \"The following schedules will be deleted from Bigeye with this PR:\n    ${snames}\" }"
+            --data "{ \"body\": \"The following virtual tables will be deleted from Bigeye with this PR:\n    ${vtnames}\" }"
           done
 
         
