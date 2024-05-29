@@ -20,11 +20,6 @@ deltas:
       target_column_name: order_id
     - source_column_name: tracking_number
       target_column_name: tracking_number
-    - source_column_name: status
-      target_column_name: status
-      metrics:
-      - type: PREDEFINED
-        predefined_metric: COUNT_DISTINCT
     - source_column_name: status_timestamp
       target_column_name: status_timestamp
       metrics:

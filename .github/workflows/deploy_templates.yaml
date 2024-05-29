@@ -48,6 +48,6 @@ jobs:
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
             echo "Creating template from ${file}"            
-            bigeye workspace upsert-template --bigeye_conf credentials.ini --config_file config.ini --template_file "${file}"
+            bigeye catalog upsert-template --bigeye_conf credentials.ini --config_file config.ini --template_file "${file}"
           done
           
