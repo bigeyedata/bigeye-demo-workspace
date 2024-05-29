@@ -1,7 +1,7 @@
 ---
 source_name: snowflake_warehouse
 name: Regexp check
-body: SELECT RLIKE({{column}}, {{regexp}})
+body: SELECT RLIKE({{column}},{{regexp}})
 return_type: BOOLEAN
 parameters:
   - column=COLUMN_REFERENCE
