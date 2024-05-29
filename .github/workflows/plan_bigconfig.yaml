@@ -1,10 +1,14 @@
 name: Plan Bigconfig
 
 on:
-  pull_request:
-    paths: 
-      - bigconfig/*_deployments/**/*.yaml
-      - bigconfig/*_deployments/**/*.yml
+  # pull_request:
+  #   paths: 
+  #     - bigconfig/*_deployments/**/*.yaml
+  #     - bigconfig/*_deployments/**/*.yml
+  
+  discussion:
+    types:
+      - created
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

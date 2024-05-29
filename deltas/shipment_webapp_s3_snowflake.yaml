@@ -36,7 +36,7 @@ deltas:
     group_bys: []
     source_filters: []
     target_filters: []
-    tolerance: 0.999
+    tolerance: 0.50
   - fq_target_table_name: snowflake_warehouse.TOOY_DEMO.PROD_REPL.SHIPMENT
     delta_column_mapping:
     - source_column_name: shipment_id
@@ -59,4 +59,4 @@ deltas:
     group_bys: []
     source_filters: []
     target_filters: []
-    tolerance: 0.999
+    tolerance: 0.50

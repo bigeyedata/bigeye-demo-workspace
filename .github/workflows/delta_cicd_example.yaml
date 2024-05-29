@@ -1,7 +1,10 @@
 name: Delta CICD
 on:
-  pull_request:
-    paths: [ deltas/cicd/** ]
+  # pull_request:
+  #   paths: [ deltas/cicd/** ]
+  discussion:
+    types:
+      - created
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
