@@ -1,0 +1,19 @@
+type: BIGCONFIG_FILE
+
+saved_metric_definitions:
+  metrics:
+    # 1
+    - saved_metric_id: total_daily_cost
+      metric_type:
+        predefined_metric: SUM
+      metric_name: Total cost per day
+      description: Track the approximate list cost per day
+      threshold:
+        type: AUTO
+        sensitivity: MEDIUM
+        upper_bound_only: True
+      metric_schedule:
+        named_schedule:              
+          name: 'Daily at 00:00 CDT'
+      group_by:
+        - usage_date    
