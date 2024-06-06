@@ -1,0 +1,4 @@
+---
+schedule_name: Daily at 00:00 CDT
+# UTC is 5 hours ahead of CDT
+cron: 0 5 * * *
