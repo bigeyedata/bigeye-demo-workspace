@@ -1,0 +1,9 @@
+---
+source_name: dbx_ml
+name: Referential Integrity
+body: '{{ column_to_check }} in (SELECT DISTINCT {{ lookup_column }} FROM {{ lookup_table }})'
+return_type: BOOLEAN
+parameters:
+  - column_to_check=COLUMN_REFERENCE
+  - lookup_column=STRING
+  - lookup_table=STRING
