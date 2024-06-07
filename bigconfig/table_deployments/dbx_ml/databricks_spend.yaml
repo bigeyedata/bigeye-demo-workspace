@@ -1,0 +1,9 @@
+type: BIGCONFIG_FILE
+
+table_deployments:
+    - deployments:
+      - fq_table_name: dbx_ml.Bigeye Virtual Schema.databricks_spend
+        columns:
+          - column_name: list_cost
+            metrics:
+              - saved_metric_id: total_daily_cost
