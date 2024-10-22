@@ -2,6 +2,7 @@ name: Plan Bigconfig
 
 on:
   pull_request:
+    branches: [ develop ]
     paths: 
       - bigconfig/*_deployments/**/*.yaml
       - bigconfig/*_deployments/**/*.yml
