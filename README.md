@@ -1,7 +1,7 @@
 # Overview
 This repository serves as an example for managing Bigeye programmatically.  
 It relies on the paradigm of having 2 workspaces in Bigeye–one for development and one for production.  
-**Please note:** It is a working respository maintained by Solutions Engineering at Bigeye, and updated as time permits.  
+**Please note:** It is a working respository maintained by Solutions Engineering at Bigeye and updated as time permits.  
 
 
 ## Usage
