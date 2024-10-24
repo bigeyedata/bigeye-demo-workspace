@@ -1,7 +1,7 @@
 # Overview
 This repository serves as an example for managing Bigeye programmatically.  
 It relies on the paradigm of having 2 workspaces in Bigeye–one for development and one for production.  
-**Please note:** It is a working respository maintained by Solutions Engineering at Bigeye, and updated as time permits.  
+**Please note:** It is a working respository maintained by Solutions Engineering at Bigeye and updated as time permits.  
 
 
 ## Usage
@@ -14,6 +14,12 @@ The examples demonstrate the following:
 4. Deploying deltas  
 5. Utilizing the delta CICD command (Github only)  
 6. Managing bigconfig as separate files  
+
+### Configure authentication for workflows
+Create a user with manage access to both workspaces, or create separate users for each workspace with manage access.  
+Review the [documentation](https://docs.bigeye.com/docs/cli#configuration) for configuring access via the CLI.  
+Once you have generated config.ini and credentials.ini for the user(s), you can store the contents of the files as secrets in Github.  
+You'll notice in any workflow using the CLI, that the secrets are dumped to the necessary files and referenced in the Bigeye command.  
 
 
 ### Bigconfig
