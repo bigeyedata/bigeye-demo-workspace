@@ -15,6 +15,12 @@ The examples demonstrate the following:
 5. Utilizing the delta CICD command (Github only)  
 6. Managing bigconfig as separate files  
 
+### Configure authentication for workflows
+Create a user with manage access to both workspaces, or create separate users for each workspace with manage access.  
+Review the [documentation](https://docs.bigeye.com/docs/cli#configuration) for configuring access via the CLI.  
+Once you have generated config.ini and credentials.ini for the user(s), you can store the contents of the files as secrets in Github.  
+You'll notice in any workflow using the CLI, that the secrets are dumped to the necessary files and referenced in the Bigeye command.  
+
 
 ### Bigconfig
 The [bigconfig](https://docs.bigeye.com/docs/bigconfig) deployment in this repository is separated into files that are easy to identify and understand what they contain.  
