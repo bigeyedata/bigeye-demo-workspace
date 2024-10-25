@@ -16,8 +16,12 @@ The examples demonstrate the following:
 6. Managing bigconfig as separate files  
 
 ### Configure authentication for workflows
+<<<<<<< HEAD
 Create a user with manage access to both workspaces, or create separate users for each workspace with manage access.  
 Review the [documentation](https://docs.bigeye.com/docs/cli#configuration) for configuring access via the CLI.  
+=======
+Create a user with manage access to both workspaces, or create separate users for each workspace with manage access. Review the [documentation](https://docs.bigeye.com/docs/cli#configuration) for configuring access via the CLI.  
+>>>>>>> 0ef999398d8c0a0bcc3a0fb2b31cfe176f7d00ff
 Once you have generated config.ini and credentials.ini for the user(s), you can store the contents of the files as secrets in Github.  
 You'll notice in any workflow using the CLI, that the secrets are dumped to the necessary files and referenced in the Bigeye command.  
 
