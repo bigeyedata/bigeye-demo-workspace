@@ -15,11 +15,14 @@ The examples demonstrate the following:
 5. Utilizing the delta CICD command (Github only)  
 6. Managing bigconfig as separate files  
 
+<<<<<<< HEAD
 ### Configure authentication for workflows
 Create a user with manage access to both workspaces, or create separate users for each workspace with manage access. Review the [documentation](https://docs.bigeye.com/docs/cli#configuration) for configuring access via the CLI.  
 Once you have generated config.ini and credentials.ini for the user(s), you can store the contents of the files as secrets in Github.  
 You'll notice in any workflow using the CLI, that the secrets are dumped to the necessary files and referenced in the Bigeye command.  
 
+=======
+>>>>>>> 2e054916e0f5b78be2a7048297155ff763d8bc0c
 
 ### Bigconfig
 The [bigconfig](https://docs.bigeye.com/docs/bigconfig) deployment in this repository is separated into files that are easy to identify and understand what they contain.  
@@ -43,6 +46,7 @@ When using virtual tables:
 * **Implement a naming convention** for tables and/or columns whenever possible to take advantage of the auto apply on indexing [functionality](https://docs.bigeye.com/docs/bigconfig#auto-apply-on-indexing) of bigconfig. 
 
 This functionality can also be leveraged if you have a naming convention in place for your standard tables/columns across sources.  
+<<<<<<< HEAD
 Even if there is enough similarity, you can utilize the regex feature of tag definitions to reduce the amount of code needed for deployments. See the additional example in the Bigeye [docs](https://docs.bigeye.com/docs/bigconfig#tag-definitions-optional)  
 
 ## Quick start  
@@ -53,3 +57,6 @@ Try out a quick bigconfig plan to see how it works.
 ``` bash
 bigeye bigconfig plan -w <workspace-configured-in-step1> -ip bigconfig/tag_definitions/common_columns_all_sources.yaml -ip bigconfig/tag_deployments/analytics_collection_all_sources.yaml
 ```
+=======
+Even if there is enough similarity, you can utilize the regex feature of tag definitions to reduce the amount of code needed for deployments. See the additional example in the Bigeye [docs](https://docs.bigeye.com/docs/bigconfig#tag-definitions-optional)
+>>>>>>> 2e054916e0f5b78be2a7048297155ff763d8bc0c
