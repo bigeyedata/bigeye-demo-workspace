@@ -44,4 +44,13 @@ When using virtual tables:
 * **Implement a naming convention** for tables and/or columns whenever possible to take advantage of the auto apply on indexing [functionality](https://docs.bigeye.com/docs/bigconfig#auto-apply-on-indexing) of bigconfig. 
 
 This functionality can also be leveraged if you have a naming convention in place for your standard tables/columns across sources.  
-Even if there is enough similarity, you can utilize the regex feature of tag definitions to reduce the amount of code needed for deployments. See the additional example in the Bigeye [docs](https://docs.bigeye.com/docs/bigconfig#tag-definitions-optional)
+Even if there is enough similarity, you can utilize the regex feature of tag definitions to reduce the amount of code needed for deployments. See the additional example in the Bigeye [docs](https://docs.bigeye.com/docs/bigconfig#tag-definitions-optional)  
+
+## Quick start  
+Try out a quick bigconfig plan to see how it works.  
+1. Configure access to Bigeye via the CLI (docs above)  
+2. Update the UNIT_PRICES tag_id in bigconfig/tag_definitions/common_columns_all_sources.yaml. Change the price_per_unit column to the name of a **numeric** column in any of your sources.  
+3. Run a plan with the tag deployment that references the tag ID; i.e. bigconfig/tag_deployments/analytics_collection_all_sources.yaml.  
+``` bash
+bigeye bigconfig plan -w <workspace-configured-in-step1> -ip bigconfig/tag_definitions/common_columns_all_sources.yaml -ip bigconfig/tag_deployments/analytics_collection_all_sources.yaml
+```
