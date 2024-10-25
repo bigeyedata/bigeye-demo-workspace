@@ -1,4 +1,4 @@
-name: Plan Bigconfig
+name: Plan Bigconfig develop
 
 on:
   pull_request:
@@ -12,8 +12,8 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   PR_NUMBER: ${{ github.event.number }}
   CURRENT_REPO: ${{ github.repository }}
-  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
-  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+  BIGEYE_CREDENTIALS: ${{ secrets.CLI_CREDS_DEV }}
+  BIGEYE_CONFIG: ${{ secrets.CLI_CONFIG_DEV }}
 
 jobs:
   plan_bigconfig:

@@ -1,20 +1,17 @@
-name: Delta CICD
+name: Deploy templates develop
+
 on:
-  # pull_request:
-  #   paths: [ deltas/cicd/** ]
-  discussion:
-    types:
-      - created
+  push:
+    branches: [ develop ]
+    paths: [ templates/** ]
 
 env:
-  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  PR_NUMBER: ${{ github.event.number }}
-  CURRENT_REPO: ${{ github.repository }}
-  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
-  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+  BIGEYE_CREDENTIALS: ${{ secrets.CLI_CREDS_DEV }}
+  BIGEYE_CONFIG: ${{ secrets.CLI_CONFIG_DEV }}
 
 jobs:
-  delta_cicd_example:    
+   deploy_templates:
+
     strategy:
       fail-fast: false
       matrix:
@@ -37,9 +34,9 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          deltas/cicd/*.{yaml,yml} 
+          templates/**/*.{yaml,yml}
 
-    - name: Run Deltas CICD Audit
+    - name: Deploy templates
       if: steps.verify-changed-files.outputs.any_changed == 'true'
       env:
         CHANGED_FILES: ${{ steps.verify-changed-files.outputs.all_changed_files }}    
@@ -50,6 +47,7 @@ jobs:
           echo "$BIGEYE_CONFIG" >> config.ini
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
-            bigeye deltas cicd --bigeye_conf credentials.ini --config_file config.ini -dcc "${file}"
+            echo "Creating template from ${file}"            
+            bigeye catalog upsert-template --bigeye_conf credentials.ini --config_file config.ini --template_file "${file}"
           done
-      
+          

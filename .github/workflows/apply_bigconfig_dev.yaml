@@ -1,15 +1,15 @@
-name: Deploy Bigconfig
+name: Deploy Bigconfig develop
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
     paths: 
       - bigconfig/*_deployments/**/*.yaml
       - bigconfig/*_deployments/**/*.yml
 
 env:
-  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
-  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+  BIGEYE_CREDENTIALS: ${{ secrets.CLI_CREDS_DEV }}
+  BIGEYE_CONFIG: ${{ secrets.CLI_CONFIG_DEV }}
 
 jobs:
   deploy_bigconfig:

@@ -1,16 +1,18 @@
-name: Deploy templates
+name: Deploy deltas develop
 
 on:
   push:
-    branches: [ main ]
-    paths: [ templates/** ]
+    branches: [ develop ]
+    paths: 
+      - deltas/**
+      - '!deltas/cicd/**'
 
 env:
-  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
-  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+  BIGEYE_CREDENTIALS: ${{ secrets.CLI_CREDS_DEV }}
+  BIGEYE_CONFIG: ${{ secrets.CLI_CONFIG_DEV }}
 
 jobs:
-   deploy_templates:
+   deploy_deltas:
 
     strategy:
       fail-fast: false
@@ -34,9 +36,9 @@ jobs:
       id: verify-changed-files
       with:
         files: |
-          templates/**/*.{yaml,yml}
+          deltas/*.{yaml,yml}
 
-    - name: Deploy templates
+    - name: Deploy deltas
       if: steps.verify-changed-files.outputs.any_changed == 'true'
       env:
         CHANGED_FILES: ${{ steps.verify-changed-files.outputs.all_changed_files }}    
@@ -48,6 +50,6 @@ jobs:
           echo "$BIGEYE_CREDENTIALS" >> credentials.ini
           for file in ${CHANGED_FILES}; do
             echo "Creating template from ${file}"            
-            bigeye catalog upsert-template --bigeye_conf credentials.ini --config_file config.ini --template_file "${file}"
+            bigeye deltas create-delta --bigeye_conf credentials.ini --config_file config.ini --delta_conf "${file}"
           done
           

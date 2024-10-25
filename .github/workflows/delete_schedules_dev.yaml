@@ -1,13 +1,13 @@
-name: Delete named schedules
+name: Delete named schedules develop
 
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
     paths: [ schedules/** ]
 
 env:
-  BIGEYE_CREDENTIALS: ${{ secrets.BIGEYE_API_CREDENTIALS }}
-  BIGEYE_CONFIG: ${{ secrets.BIGEYE_API_CONFIGS }}
+  BIGEYE_CREDENTIALS: ${{ secrets.CLI_CREDS_DEV }}
+  BIGEYE_CONFIG: ${{ secrets.CLI_CONFIG_DEV }}
 
 jobs:
    delete_named_schedules:
