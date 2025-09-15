@@ -10,7 +10,7 @@ The examples demonstrate the following:
   
 1. Deploying and deleting virtual tables  
 2. Deploying and deleting cron schedules  
-3. Deploying metric templates (deletes coming soon)  
+3. Deploying and deleting metric templates
 4. Deploying deltas  
 5. Utilizing the delta CICD command (Github only)  
 6. Managing bigconfig as separate files  
